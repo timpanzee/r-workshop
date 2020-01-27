@@ -8,3 +8,19 @@ output: html_document
 # Plots with ggplot2
 
 We are going to make plots in R using the ggplot2 package from the tidyverse.
+
+```{r}
+
+library(tidyverse)
+library(readxl)
+library(here)
+
+```
+
+# California National Parks Data
+
+```{r}
+
+ca_np <- read_csv(here("data/ca_np.csv"))
+
+```
