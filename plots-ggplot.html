@@ -397,6 +397,20 @@ $(document).ready(function () {
 library(here)</code></pre>
 <pre><code>## here() starts at /Users/jlang/github/r-workshop</code></pre>
 </div>
+<div id="california-national-parks-data" class="section level1">
+<h1>California National Parks Data</h1>
+<pre class="r"><code>ca_np &lt;- read_csv(here(&quot;data/ca_np.csv&quot;))</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   region = col_character(),
+##   state = col_character(),
+##   code = col_character(),
+##   park_name = col_character(),
+##   type = col_character(),
+##   visitors = col_double(),
+##   year = col_double()
+## )</code></pre>
+</div>
 
 
 
