@@ -23,9 +23,41 @@ skimr::skim(lobsters)
 
 ```{r}
 
-lobsters %>%
-  group_by(year) %>%
-  summarize(count_by_year = n())
+# populate our variable
+siteyear_summary <- lobsters %>%
+  group_by(site, year) %>%
+  summarize(count_by_siteyear = n(),
+            mean_size_mm = mean(size_mm, na.rm = TRUE),
+            sd_size_mm = sd(size_mm, na.rm = TRUE)
+  )
+
+# inspect our variable
+siteyear_summary %>% kable()
+```
+
+
+There are `r nrow(lobsters)` total lobsters included in this report.
+
+## Median Lobster Size for each site year
+
+```{r}
+siteyear_summary <- lobsters %>%
+  group_by(site, year) %>%
+  summarize(median_size_mm = median(size_mm, na.rm = TRUE))
+
+ggplot(data = siteyear_summary, aes(x = year, y = median_size_mm, color = site)) +
+         geom_line()
+
+ggsave(here("figures", "lobsters-line.png"))
 
 ```
 
+```{r}
+
+ggplot(data = siteyear_summary, aes(x = year, y = median_size_mm)) +
+  geom_col() +
+  facet_wrap(~site)
+
+ggsave(here("figures", "lobsters-cols.png"))
+
+```
