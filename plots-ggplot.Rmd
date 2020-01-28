@@ -21,6 +21,54 @@ library(here)
 
 ```{r}
 
-ca_np <- read_csv(here("data/ca_np.csv"))
+ca_np <- read_csv(here("data", "ca_np.csv"))
+ci_np <- read_excel(here("data", "ci_np.xlsx"))
 
 ```
+
+## make my own first graph!
+
+We're going to make a line plot of year (x-variable) vs vistiors (y variable) in ggplot:
+
+```{r}
+
+ggplot(data = ci_np, aes(x = year, y = visitors)) + 
+  geom_line() +
+  geom_point()
+
+```
+
+Make a base layer for my CI plots:
+
+```{r}
+
+gg_base <- ggplot(data = ci_np, aes(x = year, y = visitors))
+gg_base + geom_point()
+
+```
+
+### Now let's start customizing!
+
+- line / point colors: color
+- change line type: linetype
+- change point style: pch
+- change transparency: alpha
+
+```{r}
+
+gg_np <- ggplot(data = ca_np, aes(x = year, y = visitors, group = park_name))
+
+gg_np +
+  geom_line(show.legend = FALSE) +
+  theme_light() + 
+  labs(x = "year", y = "annual visitors") +
+  facet_wrap(~ park_name)
+
+ggsave(here("figures", "np_graph.jpg"), dpi = 180, width = 8, height = 7)
+
+```
+
+
+
+
+

@@ -1,0 +1,31 @@
+---
+title: "pivot_lobsters.Rmd"
+author: "Jeremy Lang"
+date: "1/27/2020"
+output: html_document
+---
+
+```{r}
+
+## attach libraries
+library(tidyverse)
+library(readxl)
+library(here)
+library(skimr) # install.packages('skimr')
+library(kableExtra) # install.packages('kableExtra')
+
+## read in data
+lobsters <- read_xlsx(here("data/lobsters.xlsx"), skip=4)
+
+skimr::skim(lobsters)
+
+```
+
+```{r}
+
+lobsters %>%
+  group_by(year) %>%
+  summarize(count_by_year = n())
+
+```
+
