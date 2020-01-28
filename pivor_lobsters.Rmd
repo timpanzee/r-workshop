@@ -61,3 +61,15 @@ ggplot(data = siteyear_summary, aes(x = year, y = median_size_mm)) +
 ggsave(here("figures", "lobsters-cols.png"))
 
 ```
+
+```{r}
+
+lobsters %>%
+  count(site, year)
+
+```
+
+There are `r count(lobsters)` total lobsters included in this summary.
+
+
+
