@@ -71,5 +71,16 @@ lobsters %>%
 
 There are `r count(lobsters)` total lobsters included in this summary.
 
+```{r}
+
+lobsters_detailed <- lobsters %>%
+  mutate(size_m = size_mm / 1000,
+   millenia = 2000,
+   scientist = "Beaker"
+  )
+
+lobsters_detailed %>% select(date, site, size_mm)
+
+```
 
 
