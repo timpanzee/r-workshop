@@ -1,0 +1,60 @@
+---
+title: "my_tidying.Rmd"
+author: "Jeremy Lang"
+date: "1/28/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(janitor) # install.packages("janitor")
+library(here)
+library(readxl)
+
+inverts <- read_excel(here("data", "inverts.xlsx"))
+
+inverts_long <- pivot_longer(data = inverts,
+                             cols = "2016":"2018",
+                             names_to = "year",
+                             values_to = "sp_count")
+
+inverts_long <- inverts_long %>% mutate(year = as.numeric(year))
+
+inverts_wide <- inverts_long %>% 
+  pivot_wider(names_from = common_name,
+              values_from = sp_count)
+
+inverts_wide <- inverts_wide %>%
+  clean_names()
+
+inverts_unite <- inverts_long %>%
+  unite(col = "site_year",
+        c(site, year),
+        sep = "_")
+
+inverts_moyr <- inverts_long %>%
+  unite(col = "mo_yr",
+        c(month, year),
+        sep = "/")
+
+inverts_sep <- inverts_unite %>% 
+  separate(site_year, into = c("my_site", "my_year"))
+
+ca_abbr <- inverts %>%
+  mutate(
+    common_name = 
+      str_replace(common_name, pattern = "california", replacement = "CA")
+  )
+
+awesome_lobsters <- inverts %>%
+  mutate(
+    common_name =
+      str_replace(common_name, pattern = "s.*y", replacement = "awesome")
+  )
+
+
+
+```
+
